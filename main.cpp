@@ -101,6 +101,8 @@ int Drawing()
 			
 		MandelbrotToCanvas (scale, init_pos, Steps);
 
+		printf ("FPS = %d\n", GetFPS());
+
 		EndDrawing();		
 	}
 	
