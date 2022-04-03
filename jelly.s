@@ -1,4 +1,5 @@
 	.file	"main.cpp"
+	.intel_syntax noprefix
 	.text
 	.globl	_Z15ProcessKeyboardP7Vector2PfPi
 	.type	_Z15ProcessKeyboardP7Vector2PfPi, @function
@@ -6,94 +7,94 @@ _Z15ProcessKeyboardP7Vector2PfPi:
 .LFB5895:
 	.cfi_startproc
 	endbr64
-	pushq	%r12
+	push	r12
 	.cfi_def_cfa_offset 16
 	.cfi_offset 12, -16
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 24
 	.cfi_offset 6, -24
-	pushq	%rbx
+	push	rbx
 	.cfi_def_cfa_offset 32
 	.cfi_offset 3, -32
-	movq	%rdi, %rbx
-	movq	%rsi, %rbp
-	movq	%rdx, %r12
-	movl	$90, %edi
+	mov	rbx, rdi
+	mov	rbp, rsi
+	mov	r12, rdx
+	mov	edi, 90
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L2
-	vxorpd	%xmm2, %xmm2, %xmm2
-	vcvtss2sd	0(%rbp), %xmm2, %xmm0
-	vmulsd	.LC0(%rip), %xmm0, %xmm0
-	vcvtsd2ss	%xmm0, %xmm0, %xmm0
-	vmovss	%xmm0, 0(%rbp)
+	vxorpd	xmm2, xmm2, xmm2
+	vcvtss2sd	xmm0, xmm2, DWORD PTR 0[rbp]
+	vmulsd	xmm0, xmm0, QWORD PTR .LC0[rip]
+	vcvtsd2ss	xmm0, xmm0, xmm0
+	vmovss	DWORD PTR 0[rbp], xmm0
 .L2:
-	movl	$88, %edi
+	mov	edi, 88
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L3
-	vxorpd	%xmm3, %xmm3, %xmm3
-	vcvtss2sd	0(%rbp), %xmm3, %xmm0
-	vdivsd	.LC0(%rip), %xmm0, %xmm0
-	vcvtsd2ss	%xmm0, %xmm0, %xmm0
-	vmovss	%xmm0, 0(%rbp)
+	vxorpd	xmm3, xmm3, xmm3
+	vcvtss2sd	xmm0, xmm3, DWORD PTR 0[rbp]
+	vdivsd	xmm0, xmm0, QWORD PTR .LC0[rip]
+	vcvtsd2ss	xmm0, xmm0, xmm0
+	vmovss	DWORD PTR 0[rbp], xmm0
 .L3:
-	movl	$65, %edi
+	mov	edi, 65
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L4
-	vmovss	.LC1(%rip), %xmm0
-	vmulss	0(%rbp), %xmm0, %xmm0
-	vaddss	(%rbx), %xmm0, %xmm0
-	vmovss	%xmm0, (%rbx)
+	vmovss	xmm0, DWORD PTR .LC1[rip]
+	vmulss	xmm0, xmm0, DWORD PTR 0[rbp]
+	vaddss	xmm0, xmm0, DWORD PTR [rbx]
+	vmovss	DWORD PTR [rbx], xmm0
 .L4:
-	movl	$68, %edi
+	mov	edi, 68
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L5
-	vmovss	.LC1(%rip), %xmm0
-	vmulss	0(%rbp), %xmm0, %xmm1
-	vmovss	(%rbx), %xmm0
-	vsubss	%xmm1, %xmm0, %xmm0
-	vmovss	%xmm0, (%rbx)
+	vmovss	xmm0, DWORD PTR .LC1[rip]
+	vmulss	xmm1, xmm0, DWORD PTR 0[rbp]
+	vmovss	xmm0, DWORD PTR [rbx]
+	vsubss	xmm0, xmm0, xmm1
+	vmovss	DWORD PTR [rbx], xmm0
 .L5:
-	movl	$87, %edi
+	mov	edi, 87
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L6
-	vmovss	.LC1(%rip), %xmm0
-	vmulss	0(%rbp), %xmm0, %xmm0
-	vaddss	4(%rbx), %xmm0, %xmm0
-	vmovss	%xmm0, 4(%rbx)
+	vmovss	xmm0, DWORD PTR .LC1[rip]
+	vmulss	xmm0, xmm0, DWORD PTR 0[rbp]
+	vaddss	xmm0, xmm0, DWORD PTR 4[rbx]
+	vmovss	DWORD PTR 4[rbx], xmm0
 .L6:
-	movl	$83, %edi
+	mov	edi, 83
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L7
-	vmovss	.LC1(%rip), %xmm0
-	vmulss	0(%rbp), %xmm0, %xmm1
-	vmovss	4(%rbx), %xmm0
-	vsubss	%xmm1, %xmm0, %xmm0
-	vmovss	%xmm0, 4(%rbx)
+	vmovss	xmm0, DWORD PTR .LC1[rip]
+	vmulss	xmm1, xmm0, DWORD PTR 0[rbp]
+	vmovss	xmm0, DWORD PTR 4[rbx]
+	vsubss	xmm0, xmm0, xmm1
+	vmovss	DWORD PTR 4[rbx], xmm0
 .L7:
-	movl	$79, %edi
+	mov	edi, 79
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L8
-	addl	$4, (%r12)
+	add	DWORD PTR [r12], 4
 .L8:
-	movl	$80, %edi
+	mov	edi, 80
 	call	IsKeyDown@PLT
-	testb	%al, %al
+	test	al, al
 	je	.L9
-	subl	$4, (%r12)
+	sub	DWORD PTR [r12], 4
 .L9:
 	call	GetKeyPressed@PLT
-	popq	%rbx
+	pop	rbx
 	.cfi_def_cfa_offset 24
-	popq	%rbp
+	pop	rbp
 	.cfi_def_cfa_offset 16
-	popq	%r12
+	pop	r12
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
@@ -109,175 +110,175 @@ _Z7Drawingv:
 .LFB5896:
 	.cfi_startproc
 	endbr64
-	leaq	8(%rsp), %r10
+	lea	r10, 8[rsp]
 	.cfi_def_cfa 10, 0
-	andq	$-32, %rsp
-	pushq	-8(%r10)
-	pushq	%rbp
-	movq	%rsp, %rbp
+	and	rsp, -32
+	push	QWORD PTR -8[r10]
+	push	rbp
+	mov	rbp, rsp
 	.cfi_escape 0x10,0x6,0x2,0x76,0
-	pushq	%r15
-	pushq	%r14
-	pushq	%r13
-	pushq	%r12
-	pushq	%r10
+	push	r15
+	push	r14
+	push	r13
+	push	r12
+	push	r10
 	.cfi_escape 0xf,0x3,0x76,0x58,0x6
 	.cfi_escape 0x10,0xf,0x2,0x76,0x78
 	.cfi_escape 0x10,0xe,0x2,0x76,0x70
 	.cfi_escape 0x10,0xd,0x2,0x76,0x68
 	.cfi_escape 0x10,0xc,0x2,0x76,0x60
-	pushq	%rbx
-	subq	$192, %rsp
+	push	rbx
+	sub	rsp, 192
 	.cfi_escape 0x10,0x3,0x2,0x76,0x50
-	movq	%fs:40, %rax
-	movq	%rax, -56(%rbp)
-	xorl	%eax, %eax
-	movl	$0x3c23d70a, -128(%rbp)
-	movl	$0x00000000, -120(%rbp)
-	movl	$0x00000000, -116(%rbp)
-	movl	$256, -124(%rbp)
+	mov	rax, QWORD PTR fs:40
+	mov	QWORD PTR -56[rbp], rax
+	xor	eax, eax
+	mov	DWORD PTR -128[rbp], 0x3c23d70a
+	mov	DWORD PTR -120[rbp], 0x00000000
+	mov	DWORD PTR -116[rbp], 0x00000000
+	mov	DWORD PTR -124[rbp], 256
 	jmp	.L20
 .L28:
-	vmovdqa	%ymm4, -112(%rbp)
+	vmovdqa	YMMWORD PTR -112[rbp], ymm4
 .L16:
-	movl	$0, %r12d
-	leaq	-112(%rbp), %r15
-	vxorps	%xmm6, %xmm6, %xmm6
-	vcvtsi2ssl	%r14d, %xmm6, %xmm0
-	vmovss	%xmm0, -180(%rbp)
+	mov	r12d, 0
+	lea	r15, -112[rbp]
+	vxorps	xmm6, xmm6, xmm6
+	vcvtsi2ss	xmm0, xmm6, r14d
+	vmovss	DWORD PTR -180[rbp], xmm0
 .L14:
-	vxorps	%xmm3, %xmm3, %xmm3
-	vcvtsi2ssl	(%r15,%r12,4), %xmm3, %xmm0
-	vmulss	.LC6(%rip), %xmm0, %xmm0
-	vdivss	-180(%rbp), %xmm0, %xmm0
+	vxorps	xmm3, xmm3, xmm3
+	vcvtsi2ss	xmm0, xmm3, DWORD PTR [r15+r12*4]
+	vmulss	xmm0, xmm0, DWORD PTR .LC6[rip]
+	vdivss	xmm0, xmm0, DWORD PTR -180[rbp]
 	call	sinf@PLT
-	vmulss	.LC7(%rip), %xmm0, %xmm0
-	vcvttss2sil	%xmm0, %eax
-	movb	$0, %bl
-	movb	%al, %bh
-	movzbl	%al, %eax
-	sall	$16, %eax
-	andl	$-16711681, %ebx
-	orl	%ebx, %eax
-	orl	$-16777216, %eax
-	movl	%eax, %edx
-	movl	%eax, %ebx
-	vcvttss2sil	-132(%rbp), %esi
-	vcvttss2sil	-136(%rbp), %edi
-	addl	%r12d, %edi
+	vmulss	xmm0, xmm0, DWORD PTR .LC7[rip]
+	vcvttss2si	eax, xmm0
+	mov	bl, 0
+	mov	bh, al
+	movzx	eax, al
+	sal	eax, 16
+	and	ebx, -16711681
+	or	eax, ebx
+	or	eax, -16777216
+	mov	edx, eax
+	mov	ebx, eax
+	vcvttss2si	esi, DWORD PTR -132[rbp]
+	vcvttss2si	edi, DWORD PTR -136[rbp]
+	add	edi, r12d
 	call	DrawPixel@PLT
-	addq	$1, %r12
-	cmpq	$8, %r12
+	add	r12, 1
+	cmp	r12, 8
 	jne	.L14
-	vmovss	-136(%rbp), %xmm2
-	vaddss	.LC8(%rip), %xmm2, %xmm1
-	vmovss	%xmm1, -136(%rbp)
-	vmovss	-144(%rbp), %xmm4
-	vmulss	.LC8(%rip), %xmm4, %xmm0
-	vaddss	-140(%rbp), %xmm0, %xmm6
-	vmovss	%xmm6, -140(%rbp)
-	subl	$1, %r13d
+	vmovss	xmm2, DWORD PTR -136[rbp]
+	vaddss	xmm1, xmm2, DWORD PTR .LC8[rip]
+	vmovss	DWORD PTR -136[rbp], xmm1
+	vmovss	xmm4, DWORD PTR -144[rbp]
+	vmulss	xmm0, xmm4, DWORD PTR .LC8[rip]
+	vaddss	xmm6, xmm0, DWORD PTR -140[rbp]
+	vmovss	DWORD PTR -140[rbp], xmm6
+	sub	r13d, 1
 	je	.L27
 .L18:
-	vbroadcastss	-144(%rbp), %ymm3
-	vmulps	_ZL2DX(%rip), %ymm3, %ymm3
-	vbroadcastss	-140(%rbp), %ymm0
-	vaddps	%ymm0, %ymm3, %ymm3
-	vpxor	%xmm0, %xmm0, %xmm0
-	vmovdqa	%ymm0, -112(%rbp)
-	testl	%r14d, %r14d
+	vbroadcastss	ymm3, DWORD PTR -144[rbp]
+	vmulps	ymm3, ymm3, YMMWORD PTR _ZL2DX[rip]
+	vbroadcastss	ymm0, DWORD PTR -140[rbp]
+	vaddps	ymm3, ymm3, ymm0
+	vpxor	xmm0, xmm0, xmm0
+	vmovdqa	YMMWORD PTR -112[rbp], ymm0
+	test	r14d, r14d
 	jle	.L16
-	vmovaps	_ZL10MaxDistSqr(%rip), %ymm6
-	vmovaps	-240(%rbp), %ymm0
-	vmovaps	%ymm3, %ymm2
-	vpxor	%xmm4, %xmm4, %xmm4
-	movl	$0, %edx
+	vmovaps	ymm6, YMMWORD PTR _ZL10MaxDistSqr[rip]
+	vmovaps	ymm0, YMMWORD PTR -240[rbp]
+	vmovaps	ymm2, ymm3
+	vpxor	xmm4, xmm4, xmm4
+	mov	edx, 0
 .L17:
-	vmulps	%ymm2, %ymm2, %ymm1
-	vmulps	%ymm0, %ymm0, %ymm5
-	vmulps	%ymm0, %ymm2, %ymm0
-	vsubps	%ymm5, %ymm1, %ymm2
-	vaddps	%ymm3, %ymm2, %ymm2
-	vaddps	%ymm0, %ymm0, %ymm0
-	vaddps	-176(%rbp), %ymm0, %ymm0
-	vaddps	%ymm5, %ymm1, %ymm1
-	vcmpps	$18, %ymm6, %ymm1, %ymm1
-	vpsubd	%ymm1, %ymm4, %ymm4
-	vmovmskps	%ymm1, %eax
-	testl	%eax, %eax
+	vmulps	ymm1, ymm2, ymm2
+	vmulps	ymm5, ymm0, ymm0
+	vmulps	ymm0, ymm2, ymm0
+	vsubps	ymm2, ymm1, ymm5
+	vaddps	ymm2, ymm2, ymm3
+	vaddps	ymm0, ymm0, ymm0
+	vaddps	ymm0, ymm0, YMMWORD PTR -176[rbp]
+	vaddps	ymm1, ymm1, ymm5
+	vcmpps	ymm1, ymm1, ymm6, 18
+	vpsubd	ymm4, ymm4, ymm1
+	vmovmskps	eax, ymm1
+	test	eax, eax
 	je	.L28
-	addl	$1, %edx
-	cmpl	%edx, %r14d
+	add	edx, 1
+	cmp	r14d, edx
 	jne	.L17
-	vmovdqa	%ymm4, -112(%rbp)
+	vmovdqa	YMMWORD PTR -112[rbp], ymm4
 	jmp	.L16
 .L27:
-	vmovss	-132(%rbp), %xmm5
-	vaddss	.LC9(%rip), %xmm5, %xmm7
-	vmovss	%xmm7, -132(%rbp)
-	subl	$1, -192(%rbp)
+	vmovss	xmm5, DWORD PTR -132[rbp]
+	vaddss	xmm7, xmm5, DWORD PTR .LC9[rip]
+	vmovss	DWORD PTR -132[rbp], xmm7
+	sub	DWORD PTR -192[rbp], 1
 	je	.L29
 .L19:
-	vmovss	-132(%rbp), %xmm6
-	vsubss	.LC5(%rip), %xmm6, %xmm0
-	vmulss	-144(%rbp), %xmm0, %xmm0
-	vsubss	-184(%rbp), %xmm0, %xmm0
-	vmovss	-188(%rbp), %xmm1
-	vmovss	%xmm1, -140(%rbp)
-	movl	$100, %r13d
-	vxorps	%xmm2, %xmm2, %xmm2
-	vmovss	%xmm2, -136(%rbp)
-	vbroadcastss	%xmm0, %ymm7
-	vmovaps	%ymm7, -176(%rbp)
-	vmovaps	%ymm7, -240(%rbp)
+	vmovss	xmm6, DWORD PTR -132[rbp]
+	vsubss	xmm0, xmm6, DWORD PTR .LC5[rip]
+	vmulss	xmm0, xmm0, DWORD PTR -144[rbp]
+	vsubss	xmm0, xmm0, DWORD PTR -184[rbp]
+	vmovss	xmm1, DWORD PTR -188[rbp]
+	vmovss	DWORD PTR -140[rbp], xmm1
+	mov	r13d, 100
+	vxorps	xmm2, xmm2, xmm2
+	vmovss	DWORD PTR -136[rbp], xmm2
+	vbroadcastss	ymm7, xmm0
+	vmovaps	YMMWORD PTR -176[rbp], ymm7
+	vmovaps	YMMWORD PTR -240[rbp], ymm7
 	jmp	.L18
 .L29:
 	call	GetFPS@PLT
-	movl	%eax, %edx
-	leaq	.LC10(%rip), %rsi
-	movl	$1, %edi
-	movl	$0, %eax
+	mov	edx, eax
+	lea	rsi, .LC10[rip]
+	mov	edi, 1
+	mov	eax, 0
 	call	__printf_chk@PLT
 	call	EndDrawing@PLT
 .L20:
 	call	WindowShouldClose@PLT
-	testb	%al, %al
+	test	al, al
 	jne	.L12
 	call	BeginDrawing@PLT
-	leaq	-124(%rbp), %rdx
-	leaq	-128(%rbp), %rsi
-	leaq	-120(%rbp), %rdi
+	lea	rdx, -124[rbp]
+	lea	rsi, -128[rbp]
+	lea	rdi, -120[rbp]
 	call	_Z15ProcessKeyboardP7Vector2PfPi
-	movl	$-16777216, %edi
+	mov	edi, -16777216
 	call	ClearBackground@PLT
-	movl	-124(%rbp), %r14d
-	vmovss	-128(%rbp), %xmm5
-	vmovss	%xmm5, -144(%rbp)
-	vmovss	-116(%rbp), %xmm1
-	vmovss	%xmm1, -184(%rbp)
-	vmulss	.LC4(%rip), %xmm5, %xmm0
-	vsubss	-120(%rbp), %xmm0, %xmm2
-	vmovss	%xmm2, -188(%rbp)
-	movl	$600, -192(%rbp)
-	vxorps	%xmm4, %xmm4, %xmm4
-	vmovss	%xmm4, -132(%rbp)
+	mov	r14d, DWORD PTR -124[rbp]
+	vmovss	xmm5, DWORD PTR -128[rbp]
+	vmovss	DWORD PTR -144[rbp], xmm5
+	vmovss	xmm1, DWORD PTR -116[rbp]
+	vmovss	DWORD PTR -184[rbp], xmm1
+	vmulss	xmm0, xmm5, DWORD PTR .LC4[rip]
+	vsubss	xmm2, xmm0, DWORD PTR -120[rbp]
+	vmovss	DWORD PTR -188[rbp], xmm2
+	mov	DWORD PTR -192[rbp], 600
+	vxorps	xmm4, xmm4, xmm4
+	vmovss	DWORD PTR -132[rbp], xmm4
 	jmp	.L19
 .L12:
-	movq	-56(%rbp), %rax
-	xorq	%fs:40, %rax
+	mov	rax, QWORD PTR -56[rbp]
+	xor	rax, QWORD PTR fs:40
 	jne	.L30
-	movl	$0, %eax
-	addq	$192, %rsp
-	popq	%rbx
-	popq	%r10
+	mov	eax, 0
+	add	rsp, 192
+	pop	rbx
+	pop	r10
 	.cfi_remember_state
 	.cfi_def_cfa 10, 0
-	popq	%r12
-	popq	%r13
-	popq	%r14
-	popq	%r15
-	popq	%rbp
-	leaq	-8(%r10), %rsp
+	pop	r12
+	pop	r13
+	pop	r14
+	pop	r15
+	pop	rbp
+	lea	rsp, -8[r10]
 	.cfi_def_cfa 7, 8
 	ret
 .L30:
@@ -300,29 +301,29 @@ main:
 .LFB5897:
 	.cfi_startproc
 	endbr64
-	pushq	%rbx
+	push	rbx
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
-	leaq	.LC11(%rip), %rdx
-	movl	$600, %esi
-	movl	$800, %edi
+	lea	rdx, .LC11[rip]
+	mov	esi, 600
+	mov	edi, 800
 	call	InitWindow@PLT
-	movl	$60, %edi
+	mov	edi, 60
 	call	SetTargetFPS@PLT
 	call	_Z7Drawingv
-	movl	%eax, %ebx
+	mov	ebx, eax
 	call	CloseWindow@PLT
-	testl	%ebx, %ebx
+	test	ebx, ebx
 	jne	.L34
 .L32:
-	movl	$0, %eax
-	popq	%rbx
+	mov	eax, 0
+	pop	rbx
 	.cfi_remember_state
 	.cfi_def_cfa_offset 8
 	ret
 .L34:
 	.cfi_restore_state
-	leaq	.LC12(%rip), %rdi
+	lea	rdi, .LC12[rip]
 	call	puts@PLT
 	jmp	.L32
 	.cfi_endproc
@@ -333,16 +334,16 @@ _GLOBAL__sub_I__Z15ProcessKeyboardP7Vector2PfPi:
 .LFB5899:
 	.cfi_startproc
 	endbr64
-	pushq	%rbp
+	push	rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
-	movq	%rsp, %rbp
+	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	vmovaps	.LC13(%rip), %ymm0
-	vmovaps	%ymm0, _ZL10MaxDistSqr(%rip)
-	vmovaps	.LC14(%rip), %ymm0
-	vmovaps	%ymm0, _ZL2DX(%rip)
-	popq	%rbp
+	vmovaps	ymm0, YMMWORD PTR .LC13[rip]
+	vmovaps	YMMWORD PTR _ZL10MaxDistSqr[rip], ymm0
+	vmovaps	ymm0, YMMWORD PTR .LC14[rip]
+	vmovaps	YMMWORD PTR _ZL2DX[rip], ymm0
+	pop	rbp
 	.cfi_def_cfa 7, 8
 	ret
 	.cfi_endproc

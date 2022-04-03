@@ -9,7 +9,7 @@ jelly.exe: 	$(cpps)
 			g++ $(cpps) $(compilerFlags) $(opt_flags) -o jelly.exe
 
 jelly.s: 	$(cpps)
-			g++ $(cpps) $(compilerFlags) $(opt_flags) -S -o jelly.s
+			g++ $(cpps) $(compilerFlags) $(opt_flags) -S -o jelly.s -masm=intel
 
 clean:
 	rm ./jelly.exe
