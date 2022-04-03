@@ -1,6 +1,7 @@
 	.file	"main.cpp"
 	.intel_syntax noprefix
 	.text
+	.p2align 4
 	.globl	_Z15ProcessKeyboardP7Vector2PfPi
 	.type	_Z15ProcessKeyboardP7Vector2PfPi, @function
 _Z15ProcessKeyboardP7Vector2PfPi:
@@ -10,15 +11,15 @@ _Z15ProcessKeyboardP7Vector2PfPi:
 	push	r12
 	.cfi_def_cfa_offset 16
 	.cfi_offset 12, -16
+	mov	r12, rdx
 	push	rbp
 	.cfi_def_cfa_offset 24
 	.cfi_offset 6, -24
+	mov	rbp, rsi
 	push	rbx
 	.cfi_def_cfa_offset 32
 	.cfi_offset 3, -32
 	mov	rbx, rdi
-	mov	rbp, rsi
-	mov	r12, rdx
 	mov	edi, 90
 	call	IsKeyDown@PLT
 	test	al, al
@@ -89,21 +90,21 @@ _Z15ProcessKeyboardP7Vector2PfPi:
 	je	.L9
 	sub	DWORD PTR [r12], 4
 .L9:
-	call	GetKeyPressed@PLT
 	pop	rbx
 	.cfi_def_cfa_offset 24
 	pop	rbp
 	.cfi_def_cfa_offset 16
 	pop	r12
 	.cfi_def_cfa_offset 8
-	ret
+	jmp	GetKeyPressed@PLT
 	.cfi_endproc
 .LFE5895:
 	.size	_Z15ProcessKeyboardP7Vector2PfPi, .-_Z15ProcessKeyboardP7Vector2PfPi
 	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC10:
+.LC8:
 	.string	"FPS = %d\n"
 	.text
+	.p2align 4
 	.globl	_Z7Drawingv
 	.type	_Z7Drawingv, @function
 _Z7Drawingv:
@@ -128,122 +129,20 @@ _Z7Drawingv:
 	.cfi_escape 0x10,0xd,0x2,0x76,0x68
 	.cfi_escape 0x10,0xc,0x2,0x76,0x60
 	push	rbx
-	sub	rsp, 192
+	add	rsp, -128
 	.cfi_escape 0x10,0x3,0x2,0x76,0x50
 	mov	rax, QWORD PTR fs:40
 	mov	QWORD PTR -56[rbp], rax
 	xor	eax, eax
 	mov	DWORD PTR -128[rbp], 0x3c23d70a
-	mov	DWORD PTR -120[rbp], 0x00000000
-	mov	DWORD PTR -116[rbp], 0x00000000
+	mov	QWORD PTR -120[rbp], 0
 	mov	DWORD PTR -124[rbp], 256
-	jmp	.L20
-.L28:
-	vmovdqa	YMMWORD PTR -112[rbp], ymm4
-.L16:
-	mov	r12d, 0
-	lea	r15, -112[rbp]
-	vxorps	xmm6, xmm6, xmm6
-	vcvtsi2ss	xmm0, xmm6, r14d
-	vmovss	DWORD PTR -180[rbp], xmm0
-.L14:
-	vxorps	xmm3, xmm3, xmm3
-	vcvtsi2ss	xmm0, xmm3, DWORD PTR [r15+r12*4]
-	vmulss	xmm0, xmm0, DWORD PTR .LC6[rip]
-	vdivss	xmm0, xmm0, DWORD PTR -180[rbp]
-	call	sinf@PLT
-	vmulss	xmm0, xmm0, DWORD PTR .LC7[rip]
-	vcvttss2si	eax, xmm0
-	mov	bl, 0
-	mov	bh, al
-	movzx	eax, al
-	sal	eax, 16
-	and	ebx, -16711681
-	or	eax, ebx
-	or	eax, -16777216
-	mov	edx, eax
-	mov	ebx, eax
-	vcvttss2si	esi, DWORD PTR -132[rbp]
-	vcvttss2si	edi, DWORD PTR -136[rbp]
-	add	edi, r12d
-	call	DrawPixel@PLT
-	add	r12, 1
-	cmp	r12, 8
-	jne	.L14
-	vmovss	xmm2, DWORD PTR -136[rbp]
-	vaddss	xmm1, xmm2, DWORD PTR .LC8[rip]
-	vmovss	DWORD PTR -136[rbp], xmm1
-	vmovss	xmm4, DWORD PTR -144[rbp]
-	vmulss	xmm0, xmm4, DWORD PTR .LC8[rip]
-	vaddss	xmm6, xmm0, DWORD PTR -140[rbp]
-	vmovss	DWORD PTR -140[rbp], xmm6
-	sub	r13d, 1
-	je	.L27
-.L18:
-	vbroadcastss	ymm3, DWORD PTR -144[rbp]
-	vmulps	ymm3, ymm3, YMMWORD PTR _ZL2DX[rip]
-	vbroadcastss	ymm0, DWORD PTR -140[rbp]
-	vaddps	ymm3, ymm3, ymm0
-	vpxor	xmm0, xmm0, xmm0
-	vmovdqa	YMMWORD PTR -112[rbp], ymm0
-	test	r14d, r14d
-	jle	.L16
-	vmovaps	ymm6, YMMWORD PTR _ZL10MaxDistSqr[rip]
-	vmovaps	ymm0, YMMWORD PTR -240[rbp]
-	vmovaps	ymm2, ymm3
-	vpxor	xmm4, xmm4, xmm4
-	mov	edx, 0
-.L17:
-	vmulps	ymm1, ymm2, ymm2
-	vmulps	ymm5, ymm0, ymm0
-	vmulps	ymm0, ymm2, ymm0
-	vsubps	ymm2, ymm1, ymm5
-	vaddps	ymm2, ymm2, ymm3
-	vaddps	ymm0, ymm0, ymm0
-	vaddps	ymm0, ymm0, YMMWORD PTR -176[rbp]
-	vaddps	ymm1, ymm1, ymm5
-	vcmpps	ymm1, ymm1, ymm6, 18
-	vpsubd	ymm4, ymm4, ymm1
-	vmovmskps	eax, ymm1
-	test	eax, eax
-	je	.L28
-	add	edx, 1
-	cmp	r14d, edx
-	jne	.L17
-	vmovdqa	YMMWORD PTR -112[rbp], ymm4
-	jmp	.L16
-.L27:
-	vmovss	xmm5, DWORD PTR -132[rbp]
-	vaddss	xmm7, xmm5, DWORD PTR .LC9[rip]
-	vmovss	DWORD PTR -132[rbp], xmm7
-	sub	DWORD PTR -192[rbp], 1
-	je	.L29
-.L19:
-	vmovss	xmm6, DWORD PTR -132[rbp]
-	vsubss	xmm0, xmm6, DWORD PTR .LC5[rip]
-	vmulss	xmm0, xmm0, DWORD PTR -144[rbp]
-	vsubss	xmm0, xmm0, DWORD PTR -184[rbp]
-	vmovss	xmm1, DWORD PTR -188[rbp]
-	vmovss	DWORD PTR -140[rbp], xmm1
-	mov	r13d, 100
-	vxorps	xmm2, xmm2, xmm2
-	vmovss	DWORD PTR -136[rbp], xmm2
-	vbroadcastss	ymm7, xmm0
-	vmovaps	YMMWORD PTR -176[rbp], ymm7
-	vmovaps	YMMWORD PTR -240[rbp], ymm7
-	jmp	.L18
-.L29:
-	call	GetFPS@PLT
-	mov	edx, eax
-	lea	rsi, .LC10[rip]
-	mov	edi, 1
-	mov	eax, 0
-	call	__printf_chk@PLT
-	call	EndDrawing@PLT
-.L20:
 	call	WindowShouldClose@PLT
 	test	al, al
-	jne	.L12
+	jne	.L37
+	.p2align 4,,10
+	.p2align 3
+.L47:
 	call	BeginDrawing@PLT
 	lea	rdx, -124[rbp]
 	lea	rsi, -128[rbp]
@@ -251,24 +150,78 @@ _Z7Drawingv:
 	call	_Z15ProcessKeyboardP7Vector2PfPi
 	mov	edi, -16777216
 	call	ClearBackground@PLT
-	mov	r14d, DWORD PTR -124[rbp]
-	vmovss	xmm5, DWORD PTR -128[rbp]
-	vmovss	DWORD PTR -144[rbp], xmm5
-	vmovss	xmm1, DWORD PTR -116[rbp]
-	vmovss	DWORD PTR -184[rbp], xmm1
-	vmulss	xmm0, xmm5, DWORD PTR .LC4[rip]
-	vsubss	xmm2, xmm0, DWORD PTR -120[rbp]
-	vmovss	DWORD PTR -188[rbp], xmm2
-	mov	DWORD PTR -192[rbp], 600
-	vxorps	xmm4, xmm4, xmm4
-	vmovss	DWORD PTR -132[rbp], xmm4
-	jmp	.L19
-.L12:
+	vxorps	xmm5, xmm5, xmm5
+	lea	rax, -112[rbp]
+	mov	ecx, 600
+	vcvtsi2ss	xmm0, xmm5, DWORD PTR -124[rbp]
+	mov	QWORD PTR -152[rbp], rax
+	lea	rax, -80[rbp]
+	vxorps	xmm2, xmm2, xmm2
+	mov	QWORD PTR -160[rbp], rax
+	vmovss	DWORD PTR -144[rbp], xmm0
+	.p2align 4,,10
+	.p2align 3
+.L40:
+	vcvttss2si	ebx, xmm2
+	mov	r13d, 100
+	vxorps	xmm1, xmm1, xmm1
+.L39:
+	vcvttss2si	r12d, xmm1
+	mov	r15, QWORD PTR -152[rbp]
+.L38:
+	vxorps	xmm3, xmm3, xmm3
+	mov	DWORD PTR -140[rbp], ecx
+	xor	r14b, r14b
+	add	r15, 4
+	vcvtsi2ss	xmm0, xmm3, DWORD PTR -4[r15]
+	vmulss	xmm0, xmm0, DWORD PTR .LC4[rip]
+	vmovss	DWORD PTR -136[rbp], xmm2
+	vmovss	DWORD PTR -132[rbp], xmm1
+	vdivss	xmm0, xmm0, DWORD PTR -144[rbp]
+	call	sinf@PLT
+	mov	ecx, r14d
+	mov	edi, r12d
+	mov	esi, ebx
+	vmulss	xmm0, xmm0, DWORD PTR .LC5[rip]
+	add	r12d, 1
+	vcvttss2si	eax, xmm0
+	mov	ch, al
+	movzx	eax, al
+	mov	r14d, ecx
+	sal	eax, 16
+	and	r14d, -16711681
+	or	eax, r14d
+	or	eax, -16777216
+	mov	edx, eax
+	mov	r14d, eax
+	call	DrawPixel@PLT
+	cmp	QWORD PTR -160[rbp], r15
+	vmovss	xmm1, DWORD PTR -132[rbp]
+	vmovss	xmm2, DWORD PTR -136[rbp]
+	mov	ecx, DWORD PTR -140[rbp]
+	jne	.L38
+	vaddss	xmm1, xmm1, DWORD PTR .LC6[rip]
+	sub	r13d, 1
+	jne	.L39
+	vaddss	xmm2, xmm2, DWORD PTR .LC7[rip]
+	sub	ecx, 1
+	jne	.L40
+	call	GetFPS@PLT
+	lea	rsi, .LC8[rip]
+	mov	edi, 1
+	mov	edx, eax
+	xor	eax, eax
+	call	__printf_chk@PLT
+	call	EndDrawing@PLT
+	call	WindowShouldClose@PLT
+	test	al, al
+	je	.L47
+.L37:
 	mov	rax, QWORD PTR -56[rbp]
 	xor	rax, QWORD PTR fs:40
-	jne	.L30
-	mov	eax, 0
-	add	rsp, 192
+	jne	.L48
+	sub	rsp, -128
+	xor	eax, eax
 	pop	rbx
 	pop	r10
 	.cfi_remember_state
@@ -281,20 +234,21 @@ _Z7Drawingv:
 	lea	rsp, -8[r10]
 	.cfi_def_cfa 7, 8
 	ret
-.L30:
+.L48:
 	.cfi_restore_state
 	call	__stack_chk_fail@PLT
 	.cfi_endproc
 .LFE5896:
 	.size	_Z7Drawingv, .-_Z7Drawingv
 	.section	.rodata.str1.1
-.LC11:
+.LC9:
 	.string	"Mandelbrot"
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
-.LC12:
+.LC10:
 	.string	"An error occured during game loop! Terminating..."
-	.text
+	.section	.text.startup,"ax",@progbits
+	.p2align 4
 	.globl	main
 	.type	main, @function
 main:
@@ -304,9 +258,9 @@ main:
 	push	rbx
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
-	lea	rdx, .LC11[rip]
 	mov	esi, 600
 	mov	edi, 800
+	lea	rdx, .LC9[rip]
 	call	InitWindow@PLT
 	mov	edi, 60
 	call	SetTargetFPS@PLT
@@ -314,21 +268,22 @@ main:
 	mov	ebx, eax
 	call	CloseWindow@PLT
 	test	ebx, ebx
-	jne	.L34
-.L32:
-	mov	eax, 0
+	jne	.L55
+.L50:
+	xor	eax, eax
 	pop	rbx
 	.cfi_remember_state
 	.cfi_def_cfa_offset 8
 	ret
-.L34:
+.L55:
 	.cfi_restore_state
-	lea	rdi, .LC12[rip]
+	lea	rdi, .LC10[rip]
 	call	puts@PLT
-	jmp	.L32
+	jmp	.L50
 	.cfi_endproc
 .LFE5897:
 	.size	main, .-main
+	.p2align 4
 	.type	_GLOBAL__sub_I__Z15ProcessKeyboardP7Vector2PfPi, @function
 _GLOBAL__sub_I__Z15ProcessKeyboardP7Vector2PfPi:
 .LFB5899:
@@ -337,12 +292,13 @@ _GLOBAL__sub_I__Z15ProcessKeyboardP7Vector2PfPi:
 	push	rbp
 	.cfi_def_cfa_offset 16
 	.cfi_offset 6, -16
+	vmovaps	ymm0, YMMWORD PTR .LC11[rip]
+	vmovaps	YMMWORD PTR _ZL10MaxDistSqr[rip], ymm0
+	vmovaps	ymm0, YMMWORD PTR .LC12[rip]
 	mov	rbp, rsp
 	.cfi_def_cfa_register 6
-	vmovaps	ymm0, YMMWORD PTR .LC13[rip]
-	vmovaps	YMMWORD PTR _ZL10MaxDistSqr[rip], ymm0
-	vmovaps	ymm0, YMMWORD PTR .LC14[rip]
 	vmovaps	YMMWORD PTR _ZL2DX[rip], ymm0
+	vzeroupper
 	pop	rbp
 	.cfi_def_cfa 7, 8
 	ret
@@ -367,25 +323,19 @@ _GLOBAL__sub_I__Z15ProcessKeyboardP7Vector2PfPi:
 	.long	1092616192
 	.align 4
 .LC4:
-	.long	3284664320
-	.align 4
-.LC5:
-	.long	1133903872
-	.align 4
-.LC6:
 	.long	1078530011
 	.align 4
-.LC7:
+.LC5:
 	.long	1132396544
 	.align 4
-.LC8:
+.LC6:
 	.long	1090519040
 	.align 4
-.LC9:
+.LC7:
 	.long	1065353216
 	.section	.rodata.cst32,"aM",@progbits,32
 	.align 32
-.LC13:
+.LC11:
 	.long	1120403456
 	.long	1120403456
 	.long	1120403456
@@ -395,7 +345,7 @@ _GLOBAL__sub_I__Z15ProcessKeyboardP7Vector2PfPi:
 	.long	1120403456
 	.long	1120403456
 	.align 32
-.LC14:
+.LC12:
 	.long	0
 	.long	1065353216
 	.long	1073741824
