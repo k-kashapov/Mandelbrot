@@ -6,44 +6,45 @@
 static const int Scr_w = 800;
 static const int Scr_h = 600;
 
-// "Infinity" distance
-static const __m256 MaxDistSqr = _mm256_set1_ps (100.0);
+inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
+{	
+	// "Infinity" distance
+	__m256d MaxDistSqr = _mm256_set1_pd (100.0);
 
-static const __m256 DX = _mm256_set_ps (7.0, 6.0, 5.0, 4.0, 3.0, 2.0, 1.0, 0.0);
+	__m256d DX = _mm256_set_pd (3.0, 2.0, 1.0, 0.0);
 
-inline int MandelbrotToCanvas (float scale, Vector2 init_pos, int Steps)
-{
-	for (float y = 0; y < Scr_h; y++)
+	for (double y = 0; y < Scr_h; y += 1)
 	{
-		float init_y = (y - Scr_h / 2) * scale - init_pos.y;
-		float init_x = (0 - Scr_w / 2) * scale - init_pos.x;
+		double init_y = (y - Scr_h / 2) * scale - init_pos.y;
+		double init_x = (0 - Scr_w / 2) * scale - init_pos.x;
 		
-		for (float x = 0; x < Scr_w; x += 8, init_x += 8 * scale)
+		for (double x = 0; x < Scr_w; x += 4, init_x += 4 * scale)
 		{
-			__m256 init_set_x = _mm256_add_ps (_mm256_set1_ps (init_x), _mm256_mul_ps (DX, _mm256_set1_ps (scale)));
-			__m256 init_set_y = _mm256_set1_ps (init_y);
+			__m256d init_set_x = _mm256_add_pd (_mm256_set1_pd (init_x), _mm256_mul_pd (DX, _mm256_set1_pd (scale)));
+			__m256d init_set_y = _mm256_set1_pd (init_y);
 
-			__m256 curr_x     = init_set_x;
-			__m256 curr_y     = init_set_y;
+			volatile __m256d curr_x     = init_set_x;
+			volatile __m256d curr_y     = init_set_y;
 			
-			__m256i step_set  = _mm256_set1_epi32 (0);
+			volatile __m256i step_set  = _mm256_set1_epi64x (0);
 		
 			for (int step = 0; step < Steps; step++)
 			{
-				__m256 x_sqr  = _mm256_mul_ps (curr_x,  curr_x);
-				__m256 y_sqr  = _mm256_mul_ps (curr_y,  curr_y);
-				__m256 new_xy = _mm256_mul_ps (curr_x,  curr_y);
+				__m256d x_sqr  = _mm256_mul_pd (curr_x,  curr_x);
+				__m256d y_sqr  = _mm256_mul_pd (curr_y,  curr_y);
+				__m256d new_xy = _mm256_mul_pd (curr_x,  curr_y);
 		
-				__m256 new_x = _mm256_add_ps (_mm256_sub_ps (x_sqr, y_sqr), init_set_x);
-				__m256 new_y = _mm256_add_ps (_mm256_add_ps (new_xy, new_xy), init_set_y);
+				__m256d new_x = _mm256_add_pd (_mm256_sub_pd (x_sqr, y_sqr), init_set_x);
+				__m256d new_y = _mm256_add_pd (_mm256_add_pd (new_xy, new_xy), init_set_y);
 		
-				__m256 dist = _mm256_add_ps (x_sqr, y_sqr);
-		
-				__m256 compared = _mm256_cmp_ps (dist, MaxDistSqr, _CMP_LE_OQ);
+				__m256d dist = _mm256_add_pd (x_sqr, y_sqr);
+				
+				__m256d compared = _mm256_cmp_pd (dist, MaxDistSqr, _CMP_LE_OQ);
+				__m256i compared_int = _mm256_castpd_si256 (compared);
+				
+				step_set = _mm256_sub_epi64 (step_set, compared_int);
 
-				step_set = _mm256_sub_epi32 (step_set, _mm256_castps_si256 (compared));
-
-				int mask = _mm256_movemask_ps (compared);
+				int mask = _mm256_movemask_epi8 (compared_int);
 
 				if (!mask) break;
 
@@ -51,9 +52,9 @@ inline int MandelbrotToCanvas (float scale, Vector2 init_pos, int Steps)
 				curr_y = new_y;
 			}
 
-			int* int_arr = (int *) &step_set;
+			long long* int_arr = (long long *) &step_set;
 
-			for (int pixel = 0; pixel < 8; pixel++)
+			for (long long pixel = 0; pixel < 4; pixel++)
 			{	
 				int color = int_arr[pixel];
 				unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
@@ -66,7 +67,7 @@ inline int MandelbrotToCanvas (float scale, Vector2 init_pos, int Steps)
 	return 0;
 }
 
-int ProcessKeyboard (Vector2 *init_pos, float *scale, int *steps)
+int ProcessKeyboard (Vector2 *init_pos, double *scale, int *steps)
 {
 	if (IsKeyDown (KEY_Z)) *scale *= 0.9;
 	if (IsKeyDown (KEY_X)) *scale /= 0.9;
@@ -85,7 +86,7 @@ int ProcessKeyboard (Vector2 *init_pos, float *scale, int *steps)
 
 int Drawing()
 {	
-	float   scale = 0.01;
+	double   scale = 0.01;
 	Vector2 init_pos = { 0, 0 };
 
 	// How much steps to take before painting pixel black
@@ -101,7 +102,8 @@ int Drawing()
 			
 		MandelbrotToCanvas (scale, init_pos, Steps);
 
-		printf ("FPS = %d\n", GetFPS());
+		printf ("FPS = %d | Scale = %lf | Position = (%.3f, %.3f) | Steps = %d\n", 
+				GetFPS(), scale, init_pos.x, init_pos.y, Steps);
 
 		EndDrawing();		
 	}
