@@ -5,3 +5,4 @@
 * FPS:
 *   No AVX -O0 No Drawing: 6
 *   AVX    -O0 No Drawing: 12
+*   AVX    -O2 No Drawing: 40
