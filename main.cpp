@@ -99,7 +99,7 @@ int Drawing()
 int main (int argc, const char **argv)
 {
 	InitWindow (Scr_w, Scr_h, "Mandelbrot");
-	SetTargetFPS (60);
+	// SetTargetFPS (60);
 
 	int loop_ret = Drawing();
 
