@@ -54,13 +54,13 @@ inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
 
 			long long* int_arr = (long long *) &step_set;
 
-			// for (long long pixel = 0; pixel < 4; pixel++)
-			// {
-				// int color = int_arr[pixel];
-				// unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
-// 
-				// DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
-			// }
+			for (long long pixel = 0; pixel < 4; pixel++)
+			{
+				int color = int_arr[pixel];
+				unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
+
+				DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
+			}
 		}
 	}
 
@@ -86,7 +86,7 @@ int ProcessKeyboard (Vector2 *init_pos, double *scale, int *steps)
 
 int Drawing()
 {	
-	double   scale = 0.01;
+	double   scale = 0.005;
 	Vector2 init_pos = { 0, 0 };
 
 	// How much steps to take before painting pixel black

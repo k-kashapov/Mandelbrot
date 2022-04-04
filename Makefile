@@ -4,7 +4,7 @@ cpps = main.cpp
 compilerFlags = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11 -I include -mavx -mavx2 -march=native -msse4.2
 
 jelly.exe: 	$(cpps)
-			g++ $(cpps) $(compilerFlags) -o jelly.exe -O1
+			g++ $(cpps) $(compilerFlags) -o jelly.exe -O0
 
 jelly_o2.exe: 	$(cpps)
 				g++ $(cpps) $(compilerFlags) -o jelly_o2.exe -O2
