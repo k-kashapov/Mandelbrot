@@ -6,7 +6,7 @@
 static const int Scr_w = 800;
 static const int Scr_h = 600;
 
-inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
+inline int MandelbrotToCanvas (Color *pixels, double scale, Vector2 init_pos, int Steps)
 {	
 	// "Infinity" distance
 	__m256d MaxDistSqr = _mm256_set1_pd (100.0);
@@ -24,7 +24,7 @@ inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
 			__m256d init_set_y = _mm256_set1_pd (init_y);
 
 			volatile __m256d curr_x     = init_set_x;
-			volatile __m256d curr_y     = init_set_y;
+			__m256d curr_y     = init_set_y;
 			
 			__m256i step_set  = _mm256_set1_epi64x (0);
 		
@@ -59,7 +59,7 @@ inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
 				int color = int_arr[pixel];
 				unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
 
-				// DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
+				*(pixels + (int) (y * Scr_w) + (int) x + pixel) =  Color { 0, colorScale, colorScale, 255 };
 			}
 		}
 	}
@@ -86,24 +86,29 @@ int ProcessKeyboard (Vector2 *init_pos, double *scale, int *steps)
 
 int Drawing()
 {	
-	double   scale = 0.005;
+	double  scale    = 0.005;
 	Vector2 init_pos = { 0, 0 };
 
 	// How much steps to take before painting pixel black
 	int Steps = 256;
+
+	Image     canvas    = GenImageColor (Scr_w, Scr_h, BLACK);
+	Texture2D canvasTex = LoadTextureFromImage (canvas);
+	Color     *pixels   = LoadImageColors (canvas);
 
 	while (!WindowShouldClose())
 	{
 		BeginDrawing();
 
 		ProcessKeyboard (&init_pos, &scale, &Steps);
-		
-		ClearBackground (BLACK);
-			
-		MandelbrotToCanvas (scale, init_pos, Steps);
 
-		printf ("FPS = %d | Scale = %lf | Position = (%.3f, %.3f) | Steps = %d\n", 
-				GetFPS(), scale, init_pos.x, init_pos.y, Steps);
+		MandelbrotToCanvas (pixels, scale, init_pos, Steps);
+
+		UpdateTexture (canvasTex, pixels);
+		DrawTexture (canvasTex, 0, 0, WHITE);
+
+		printf ("FPS = %d | FrameTime = %lf | Scale = %lf | Position = (%.3f, %.3f) | Steps = %d\n", 
+				GetFPS(), GetFrameTime(), scale, init_pos.x, init_pos.y, Steps);
 
 		EndDrawing();		
 	}
