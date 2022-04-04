@@ -26,7 +26,7 @@ inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
 			volatile __m256d curr_x     = init_set_x;
 			volatile __m256d curr_y     = init_set_y;
 			
-			volatile __m256i step_set  = _mm256_set1_epi64x (0);
+			__m256i step_set  = _mm256_set1_epi64x (0);
 		
 			for (int step = 0; step < Steps; step++)
 			{
@@ -59,7 +59,7 @@ inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
 				int color = int_arr[pixel];
 				unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
 
-				DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
+				// DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
 			}
 		}
 	}
