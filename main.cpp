@@ -86,6 +86,8 @@ int Drawing()
 
 		ProcessKeyboard (&init_pos, &scale);
 
+		printf ("FPS = %d\n", GetFPS());
+
 		MandelbrotToCanvas (scale, init_pos);
 
 		EndDrawing();		
