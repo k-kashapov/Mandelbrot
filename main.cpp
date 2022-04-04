@@ -54,13 +54,13 @@ inline int MandelbrotToCanvas (double scale, Vector2 init_pos, int Steps)
 
 			long long* int_arr = (long long *) &step_set;
 
-			for (long long pixel = 0; pixel < 4; pixel++)
-			{	
-				int color = int_arr[pixel];
-				unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
-
-				DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
-			}
+			// for (long long pixel = 0; pixel < 4; pixel++)
+			// {
+				// int color = int_arr[pixel];
+				// unsigned char colorScale = (unsigned char) (sin (PI * int_arr[pixel] / Steps) * 255);
+// 
+				// DrawPixel ((int) x + pixel, (int) y, Color { 0, colorScale, colorScale, 255 });
+			// }
 		}
 	}
 
@@ -114,7 +114,7 @@ int Drawing()
 int main (int argc, const char **argv)
 {
 	InitWindow (Scr_w, Scr_h, "Mandelbrot");
-	SetTargetFPS (60);
+	// SetTargetFPS (60);
 
 	int loop_ret = Drawing();
 
