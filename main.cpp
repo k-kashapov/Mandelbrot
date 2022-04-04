@@ -6,7 +6,7 @@
 static const int Scr_w = 800;
 static const int Scr_h = 600;
 
-inline int MandelbrotToCanvas (Color *pixels, double scale, Vector2 init_pos, int Steps)
+inline int MandelbrotToCanvas (Color *pixels, double scale, double pos_x, double pos_y, int Steps)
 {	
 	// "Infinity" distance
 	__m256d MaxDistSqr = _mm256_set1_pd (100.0);
@@ -15,18 +15,22 @@ inline int MandelbrotToCanvas (Color *pixels, double scale, Vector2 init_pos, in
 
 	for (double y = 0; y < Scr_h; y += 1)
 	{
-		double init_y = (y - Scr_h / 2) * scale - init_pos.y;
-		double init_x = (0 - Scr_w / 2) * scale - init_pos.x;
+		double init_y = (y - Scr_h / 2) * scale - pos_y;
+		double init_x = (0 - Scr_w / 2) * scale - pos_x;
 		
 		for (double x = 0; x < Scr_w; x += 4, init_x += 4 * scale)
 		{
-			__m256d init_set_x = _mm256_add_pd (_mm256_set1_pd (init_x), _mm256_mul_pd (DX, _mm256_set1_pd (scale)));
-			__m256d init_set_y = _mm256_set1_pd (init_y);
+			__m256d init_set_x = _mm256_add_pd (
+												_mm256_set1_pd (init_x), 
+												_mm256_mul_pd (DX, _mm256_set1_pd (scale))
+											   );
+											   
+			volatile __m256d curr_x = init_set_x;
 
-			volatile __m256d curr_x     = init_set_x;
+			__m256d init_set_y = _mm256_set1_pd (init_y);
 			__m256d curr_y     = init_set_y;
 			
-			__m256i step_set  = _mm256_set1_epi64x (0);
+			__m256i step_set   = _mm256_set1_epi64x (0);
 		
 			for (int step = 0; step < Steps; step++)
 			{
@@ -67,16 +71,16 @@ inline int MandelbrotToCanvas (Color *pixels, double scale, Vector2 init_pos, in
 	return 0;
 }
 
-int ProcessKeyboard (Vector2 *init_pos, double *scale, int *steps)
+int ProcessKeyboard (double *pos_x, double *pos_y, double *scale, int *steps)
 {
 	if (IsKeyDown (KEY_Z)) *scale *= 0.9;
 	if (IsKeyDown (KEY_X)) *scale /= 0.9;
 
-	if (IsKeyDown (KEY_A)) init_pos->x += 10 * *scale;
-	if (IsKeyDown (KEY_D)) init_pos->x -= 10 * *scale;
+	if (IsKeyDown (KEY_A)) *pos_x += 10 * *scale;
+	if (IsKeyDown (KEY_D)) *pos_x -= 10 * *scale;
 
-	if (IsKeyDown (KEY_W)) init_pos->y += 10 * *scale;
-	if (IsKeyDown (KEY_S)) init_pos->y -= 10 * *scale;
+	if (IsKeyDown (KEY_W)) *pos_y += 10 * *scale;
+	if (IsKeyDown (KEY_S)) *pos_y -= 10 * *scale;
 
 	if (IsKeyDown (KEY_O)) *steps += 4;
 	if (IsKeyDown (KEY_P)) *steps -= 4;
@@ -86,8 +90,9 @@ int ProcessKeyboard (Vector2 *init_pos, double *scale, int *steps)
 
 int Drawing()
 {	
-	double  scale    = 0.005;
-	Vector2 init_pos = { 0, 0 };
+	double scale = 0.005;
+	double pos_x = 0;
+	double pos_y = 0;
 
 	// How much steps to take before painting pixel black
 	int Steps = 256;
@@ -100,15 +105,15 @@ int Drawing()
 	{
 		BeginDrawing();
 
-		ProcessKeyboard (&init_pos, &scale, &Steps);
+		ProcessKeyboard (&pos_x, &pos_y, &scale, &Steps);
 
-		MandelbrotToCanvas (pixels, scale, init_pos, Steps);
+		MandelbrotToCanvas (pixels, scale, pos_x, pos_y, Steps);
 
 		UpdateTexture (canvasTex, pixels);
 		DrawTexture (canvasTex, 0, 0, WHITE);
 
 		printf ("FPS = %d | FrameTime = %lf | Scale = %lf | Position = (%.3f, %.3f) | Steps = %d\n", 
-				GetFPS(), GetFrameTime(), scale, init_pos.x, init_pos.y, Steps);
+				GetFPS(), GetFrameTime(), scale, pos_x, pos_y, Steps);
 
 		EndDrawing();		
 	}
@@ -119,7 +124,7 @@ int Drawing()
 int main (int argc, const char **argv)
 {
 	InitWindow (Scr_w, Scr_h, "Mandelbrot");
-	// SetTargetFPS (60);
+	SetTargetFPS (60);
 
 	int loop_ret = Drawing();
 
