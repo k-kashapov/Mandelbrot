@@ -6,11 +6,9 @@
 
 Speed-up ratio
 
-
-x1
-
-0.06
-
-x3.5
-
-
+| AVX | Flags | Drawing | FPS | Speed-up ratio |
+|:---:|:-----:|:-------:|:---:|:--------------:|
+|  No |  -O0  |    No   |  6  |       x1       |
+| Yes |  -O0  |    No   |  12 |       x2       |
+|  No |  -O2  |    No   |  12 |       x2       |
+| Yes |  -O2  |    No   |  40 |       x4       |
