@@ -2,8 +2,15 @@
 
 * Uses AVX 256 for parallel 4 double vectors computation
 * -O2 optimization flag recommended
-* FPS:
-*   No AVX -O0 No Drawing: 6
-*   No AVX -O2 No Drawing: 12
-*   AVX    -O0 No Drawing: 12
-*   AVX    -O2 No Drawing: 40
+
+
+Speed-up ratio
+
+
+x1
+
+0.06
+
+x3.5
+
+
